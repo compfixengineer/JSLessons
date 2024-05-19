@@ -1,29 +1,50 @@
-let title = prompt("Как называется ваш проект?");
-let screens = prompt("Какие типы экранов нужно разработать?", "Простые, Cложные, Интерактивные");
-let screenPrice = +prompt("Сколько будет стоить данная работа?", 10000);
-let adaptive = confirm("Нужен ли адаптив на сайте?");
-let service1 = prompt ("Какой дополнительный тип услуги нужен?");
-let servicePrice1 = +prompt("Сколько это будет стоить?", 1000);
-let service2 = prompt ("Какой дополнительный тип услуги нужен?");
-let servicePrice2 = +prompt("Сколько это будет стоить?", 2000);
+let service1;
+let servicePrice1;
+let service2;
+let servicePrice2;
+let screens;
+let screenPrice;
+let adaptive;
 let rollback = 15;
 let fullPrice;
 let servicePercentPrice;
 let allServicePrices;
 
-// 1. Function expression
+let title = prompt("Как называется ваш проект?", "как-то называется");
+
+
+const askScreenPrice = function() {
+    screens = prompt("Какие типы экранов нужно разработать?", "Простые, Cложные, Интерактивные");
+    do {
+        screenPrice = +prompt("Сколько будет стоить данная работа?");
+    } while (!isFinite(screenPrice));
+
+    adaptive = confirm("Нужен ли адаптив на сайте?");
+};
+
+
 const getAllServicePrices = function () {
+    service1 = prompt ("Какой дополнительный тип услуги нужен?"); 
+    do {
+        servicePrice1 = +prompt("Сколько это будет стоить?", 1000);
+    } while (!isFinite(servicePrice1));
+    
+    service2 = prompt ("Какой дополнительный тип услуги нужен?");   
+    do {
+        servicePrice2 = +prompt("Сколько это будет стоить?", 1000);
+    } while (!isFinite(servicePrice2));
+    
     return servicePrice1 + servicePrice2;
 };
 
-// 2. Function declaration
+
 function getFullPrice () {
     return screenPrice + allServicePrices;
 };
 
-// 3. 
-function getTitle () {
 
+function getTitle () {
+    
     if (!title) return title; // Проверка на пустую строку,
                               // Если строка пустая, title[0] вернёт undefined, а у undefined нет метода toUpperCase(), поэтому мы получим ошибку (
     return title.trimStart()[0].toUpperCase() + title.trimStart().slice(1).replace(/ +/g, ' ').toLocaleLowerCase();
@@ -32,12 +53,12 @@ function getTitle () {
             // после удаляем лишние пробелы в строке если есть и переводим в нижний регистр
 };
 
-// 4.
+
 function getServicePercentPrices () {
     return Math.ceil(fullPrice - fullPrice * (rollback/100));
 };
 
-// 5.
+
 function getRollBackMessage (fullPrice) {
         if (fullPrice >= 30000){
         return "Скидка 10%";
@@ -55,6 +76,8 @@ function showTypeOf (parametr) {
 };
 
 title = getTitle();
+askScreenPrice ();
+console.log(typeof screenPrice + ' '+ screenPrice);
 allServicePrices = getAllServicePrices();
 fullPrice = getFullPrice();
 servicePercentPrice = getServicePercentPrices();
