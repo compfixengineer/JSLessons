@@ -12,7 +12,7 @@ let servicePercentPrice;
 let allServicePrices;
 
 // 1. Function expression
-let getAllServicePrices = function () {
+const getAllServicePrices = function () {
     return servicePrice1 + servicePrice2;
 };
 
