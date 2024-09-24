@@ -6,15 +6,16 @@ const bookUl = document.querySelectorAll('.book ul');
 const bookUlLi = document.querySelectorAll('.book ul > li');
 const newElemLi = document.createElement('li');
 const bgImage = document.querySelector('body');
-
-
+let bgImageUrl = 'url("/image/you-dont-know-js.jpg")';
+let linkTextContent = 'Книга 3. this и Прототипы Объектов';
+let newElemTextContent = 'Глава 8: За пределами ES6';
 
 function advRemove () {
     adv.remove();
 }
 
-function changeBgImage () {
-    bgImage.style.backgroundImage = 'url("/image/you-dont-know-js.jpg")';
+function changeBgImage (StringUrl) {
+    bgImage.style.backgroundImage = StringUrl; 
 }
 
 function sortBlockBook () {
@@ -37,8 +38,8 @@ function sortListBooks () {
     bookUlLi[51].append(bookUlLi[54]);
 }
 
-function renameBookTitle () {
-    bookTitleLink[4].textContent = 'Книга 3. this и Прототипы Объектов';
+function renameBookTitle (stringContent) {
+    bookTitleLink[4].textContent = stringContent;
 }
 
 function createElementLi (stringContent) {
@@ -47,9 +48,9 @@ function createElementLi (stringContent) {
 }
 
 
-changeBgImage ();
+changeBgImage (bgImageUrl);
 advRemove ();
 sortBlockBook ();
 sortListBooks ();
-renameBookTitle ();
-createElementLi ('Глава 8: За пределами ES6');
+renameBookTitle (linkTextContent);
+createElementLi (newElemTextContent);
