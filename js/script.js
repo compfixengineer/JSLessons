@@ -16,7 +16,6 @@ const inputTotalFullCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementById('total-count-rollback');
 
 let screens = document.querySelectorAll('.screen');
-let checkInputValue = false;
 
 const appData = {
     title: '',
@@ -31,12 +30,38 @@ const appData = {
     servicesPercent: {},
     servicesNumber: {},
     countScreens: 0,
+    isError: false,
 
     init: function () { 
         appData.addTitle();
-        startBtn.addEventListener('click',appData.start);
+        startBtn.addEventListener('click',appData.checkEror);
         screenBtn.addEventListener('click', appData.addScreenBlock);
         inputRange.addEventListener('input', appData.rollbackInputRange);
+    },
+    
+    checkEror: function () {
+        screens = document.querySelectorAll('.screen');
+        console.log(screens);
+        
+        appData.isError = false;
+
+            screens.forEach(function (screen) {
+                const select = screen.querySelector('select');
+                const input = screen.querySelector('input');
+                console.log(select);
+                console.log(input);
+
+                if (select.value === '' || input.value === '') {
+                    appData.isError = true;
+                    console.log("error " + appData.isError);
+                    console.log(select.value + " " + input.value);
+                }
+            })
+            if (!appData.isError) {
+                appData.start();
+                console.log("start "+appData.isError);  
+                console.log("start "+appData.screen);  
+            }
     },
 
     addTitle: function () {
@@ -44,12 +69,10 @@ const appData = {
     },
 
     start: function () {
-        appData.addScreens();
-        appData.addServices();  
+        appData.addServices();
+        appData.addScreens();  
         appData.addPrices ();  
-        if (checkInputValue) {
-            appData.showResult();
-        }
+        appData.showResult();
     },
 
     addScreens: function () {
@@ -61,17 +84,13 @@ const appData = {
             const input = screen.querySelector('input'); 
             const selectName = select.options[select.selectedIndex].textContent;
             
-            if (selectName !== 'Тип экранов' && +input.value !== 0) {
-                checkInputValue = true;
                 appData.screens.push ({
                     id: index, 
                     typeScreen: selectName, 
                     price: +select.value * +input.value,
                     countScreen: +input.value
                 }); 
-            } 
-            return console.log(checkInputValue); 
-        }) 
+            }); 
     },
 
     addScreenBlock: function () {
