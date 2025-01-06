@@ -35,10 +35,10 @@ const appData = {
 
     init: function () { 
         this.addTitle();
-        startBtn.addEventListener('click',appData.checkEror.bind(appData));
-        resetBtn.addEventListener('click',appData.reset.bind(appData));
+        startBtn.addEventListener('click',this.checkEror.bind(appData));
+        resetBtn.addEventListener('click',this.reset.bind(appData));
         screenBtn.addEventListener('click', this.addScreenBlock);
-        inputRange.addEventListener('input', appData.rollbackInputRange.bind(appData));
+        inputRange.addEventListener('input', this.rollbackInputRange.bind(appData));
     },
     
     checkEror: function () {
