@@ -34,11 +34,11 @@ const appData = {
     isError: false,
 
     init: function () { 
-        appData.addTitle();
-        startBtn.addEventListener('click',this.checkEror);
-        resetBtn.addEventListener('click',this.reset);
+        this.addTitle();
+        startBtn.addEventListener('click',appData.checkEror.bind(appData));
+        resetBtn.addEventListener('click',appData.reset.bind(appData));
         screenBtn.addEventListener('click', this.addScreenBlock);
-        inputRange.addEventListener('input', this.rollbackInputRange);
+        inputRange.addEventListener('input', appData.rollbackInputRange.bind(appData));
     },
     
     checkEror: function () {
@@ -56,10 +56,8 @@ const appData = {
                 }
             })
             if (!this.isError) {
-                let thisStart = appData.start.bind(appData);
-                let thisDisabled = appData.disabled.bind(appData);
-                thisStart();
-                thisDisabled();
+                this.start();
+                this.disabled();
             } 
     },
 
@@ -83,19 +81,12 @@ const appData = {
     },
 
     reset: function () {
-        let resOtherItems = appData.resetOtherItems.bind(appData);
-        let resApp = appData.resetAppData.bind(appData);
-        let enabledApp = appData.enabled.bind(appData);
-        let resMainTotalApp = appData.resetMainTotal.bind(appData);
-        let delScreenApp = appData.deleteScreen.bind(appData);
-        let resetRollback = appData.resetRollbackRange.bind(appData);
-
-        delScreenApp();
-        enabledApp ();       
-        resApp();
-        resOtherItems();
-        resMainTotalApp();
-        resetRollback();
+        this.resetAppData();
+        this.resetOtherItems();
+        this.enabled();
+        this.resetMainTotal();
+        this.deleteScreen();
+        this.resetRollbackRange();
     },
 
     deleteScreen: function () {
@@ -243,7 +234,7 @@ const appData = {
 
     rollbackInputRange: function () {
         rangeValue.textContent = inputRange.value + ' %'; 
-        appData.rollback = parseFloat(rangeValue.textContent)/ 100;
+        this.rollback = parseFloat(rangeValue.textContent) / 100;
         
     }, 
 
